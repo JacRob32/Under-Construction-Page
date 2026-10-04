@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Under construction</title>
+<meta name="description" content="This site is under construction. Check back soon.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #eceeec;
+    --paper-deep: #e1e5e3;
+    --ink: #17252e;
+    --ink-soft: #4b5b64;
+    --steel: #2c5b7a;
+    --line: #b9c3c7;
+    --amber: #d9961a;
+    --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --text: "Source Serif 4", Georgia, "Times New Roman", serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { height: 100%; }
+
+  body {
+    margin: 0;
+    min-height: 100%;
+    color: var(--ink);
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(var(--paper-deep) 1px, transparent 1px),
+      linear-gradient(90deg, var(--paper-deep) 1px, transparent 1px);
+    background-size: 32px 32px;
+    font-family: var(--text);
+    font-size: 1.125rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+    padding: clamp(2rem, 6vw, 4rem) 0;
+  }
+
+  h1 {
+    margin: 0 0 1.5rem;
+    font-family: var(--display);
+    font-stretch: 78%;
+    font-weight: 800;
+    font-size: clamp(3rem, 8.5vw, 6.25rem);
+    line-height: 0.95;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+
+  .lede {
+    max-width: 30rem;
+    margin: 0 0 2rem;
+    color: var(--ink-soft);
+  }
+
+  .lede strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .drawing {
+    width: 100%;
+    max-width: 440px;
+    justify-self: center;
+  }
+
+  .drawing svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .ink   { fill: none; stroke: var(--ink);   stroke-width: 2;   stroke-linecap: square; stroke-linejoin: miter; }
+  .steel { fill: none; stroke: var(--steel); stroke-width: 1.5; stroke-linecap: square; }
+  .thin  { fill: none; stroke: var(--ink-soft); stroke-width: 1; stroke-linecap: butt; }
+  .gold  { fill: none; stroke: var(--amber); stroke-width: 2.5; stroke-linecap: round; }
+  .fill-gold { fill: var(--amber); }
+  .fill-steel { fill: var(--steel); fill-opacity: 0.12; stroke: none; }
+
+  /* One orchestrated moment: the drawing traces itself once on load. */
+  .draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: trace 1.6s cubic-bezier(.5, 0, .2, 1) forwards;
+    animation-delay: var(--d, 0s);
+  }
+  .appear {
+    opacity: 0;
+    animation: appear 0.6s ease forwards;
+    animation-delay: var(--d, 0s);
+  }
+  @keyframes trace  { to { stroke-dashoffset: 0; } }
+  @keyframes appear { to { opacity: 1; } }
+
+  /* Title block, like the corner of a drawing sheet */
+  .titleblock {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+  }
+
+  .cell { padding: 0.9rem 1.25rem; }
+  .cell + .cell { border-left: 1.5px solid var(--ink); }
+
+  .cell dt {
+    margin: 0 0 0.15rem;
+    font-family: var(--display);
+    font-stretch: 85%;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--ink-soft);
+  }
+
+  .cell dd {
+    margin: 0;
+    font-family: var(--display);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .status::before {
+    content: "";
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 50%;
+    background: var(--amber);
+    flex: none;
+  }
+
+  a {
+    color: var(--steel);
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 0.2em;
+  }
+  a:hover { color: var(--ink); }
+  a:focus-visible {
+    outline: 3px solid var(--amber);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 800px) {
+    main { grid-template-columns: 1fr; }
+    .drawing { max-width: 340px; justify-self: start; order: 2; }
+    .titleblock { grid-template-columns: 1fr; }
+    .cell + .cell { border-left: 0; border-top: 1.5px solid var(--ink); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .draw, .appear {
+      animation: none;
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <main>
+      <section>
+        <h1>Under construction</h1>
+        <p class="lede">
+          This site isn&rsquo;t finished yet. The foundation is in and the
+          structure is going up. <strong>Please check back soon</strong> for the
+          full version.
+        </p>
+        <p class="lede">
+          If you need to reach me in the meantime, send an email to the address below.
+        </p>
+      </section>
+
+      <div class="drawing" role="img" aria-label="Line drawing of a partly built three-story building beside a crane">
+        <svg viewBox="0 0 400 440" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- ground -->
+          <path class="thin draw" pathLength="1" d="M10 400 H390" style="--d:0s"/>
+          <path class="thin draw" pathLength="1" d="M30 412 H370 M60 424 H340" style="--d:0.2s"/>
+
+          <!-- completed lower floors: shaded infill -->
+          <rect class="fill-steel appear" x="90" y="260" width="200" height="140" style="--d:2.6s"/>
+
+          <!-- columns -->
+          <path class="ink draw" pathLength="1" d="M90 400 V130 M190 400 V130 M290 400 V130" style="--d:0.4s"/>
+
+          <!-- floor slabs -->
+          <path class="ink draw" pathLength="1" d="M80 400 H300" style="--d:0.8s"/>
+          <path class="ink draw" pathLength="1" d="M80 330 H300" style="--d:1.0s"/>
+          <path class="ink draw" pathLength="1" d="M80 260 H300" style="--d:1.2s"/>
+          <path class="ink draw" pathLength="1" d="M80 190 H300" style="--d:1.4s"/>
+
+          <!-- windows on finished floors -->
+          <path class="steel draw" pathLength="1" d="M108 288 H172 V318 H108 Z M208 288 H272 V318 H208 Z" style="--d:1.9s"/>
+          <path class="steel draw" pathLength="1" d="M108 358 H172 V388 H108 Z M208 358 H272 V388 H208 Z" style="--d:2.0s"/>
+
+          <!-- open top floor: cross bracing -->
+          <path class="thin draw" pathLength="1" d="M90 190 L190 260 M190 190 L90 260 M190 190 L290 260 M290 190 L190 260" style="--d:2.1s"/>
+
+          <!-- scaffold ladder rungs on the top bay -->
+          <path class="thin draw" pathLength="1" d="M90 160 H290 M90 130 H290" style="--d:2.3s"/>
+
+          <!-- crane tower -->
+          <path class="ink draw" pathLength="1" d="M335 400 V50 M355 400 V50" style="--d:0.6s"/>
+          <path class="thin draw" pathLength="1" d="M335 400 L355 360 L335 320 L355 280 L335 240 L355 200 L335 160 L355 120 L335 80 L355 50" style="--d:1.4s"/>
+
+          <!-- crane jib and counter-jib -->
+          <path class="ink draw" pathLength="1" d="M345 20 V50 M345 20 L170 50 M345 20 L385 50 M170 50 H395" style="--d:1.8s"/>
+          <path class="thin draw" pathLength="1" d="M345 20 L300 50 M345 20 L240 50" style="--d:2.0s"/>
+          <rect class="fill-gold appear" x="372" y="50" width="20" height="14" style="--d:2.4s"/>
+
+          <!-- cable and hook -->
+          <path class="gold draw" pathLength="1" d="M215 50 V104" style="--d:2.5s"/>
+          <path class="gold draw" pathLength="1" d="M215 104 v8 a6 6 0 1 1 -6 6" style="--d:2.9s"/>
+
+          <!-- dimension line -->
+          <path class="thin draw" pathLength="1" d="M90 428 H290 M90 422 V434 M290 422 V434" style="--d:2.7s"/>
+        </svg>
+      </div>
+    </main>
+
+    <footer>
+      <dl class="titleblock" style="margin:0">
+        <div class="cell">
+          <dt>Status</dt>
+          <dd class="status">In progress</dd>
+        </div>
+        <div class="cell">
+          <dt>Contact</dt>
+          <dd><a href="mailto:email@example.com">email@example.com</a></dd>
+        </div>
+      </dl>
+    </footer>
+  </div>
+</body>
+</html>
